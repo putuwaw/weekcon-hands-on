@@ -1,28 +1,12 @@
 # weekcon-hands-on
 
-
 ## Installation:
-
 - Clone the repository:
 ```
 git clone https://github.com/putuwaw/weekcon-hands-on.git
 ```
-
-- Install dependencies (tensorflow, pillow, flask)
-```
-pip install -r requirements.txt
-```
-- If you encounter error, try to install:
-```
-pip install tensorflow pillow flask
-```
-- Run the Flask web server:
+- Choose folder that you want, for example `image-classification`:
 ```
 cd image-classification
-flask --app app run
 ```
-
-- Try it out:
-```
-http://127.0.0.1:5000
-```
+- Follow the instruction in the `README.md` file in the folder.
