@@ -1,4 +1,3 @@
-from io import BytesIO
 from string import ascii_uppercase, digits
 
 from fastapi import FastAPI, File, UploadFile
@@ -12,9 +11,8 @@ import uvicorn
 app = FastAPI()
 
 
-# Endpoint that returns an h1 with "hello"
 @app.get("/", response_class=HTMLResponse)
-async def hello():
+async def home():
     return """<!DOCTYPE html>
     <html lang="en">
     <head>
@@ -34,19 +32,22 @@ async def hello():
     </html>"""
 
 
-# Endpoint that accepts a form-data image and returns the size
 @app.post("/predict")
 async def predict(file: UploadFile = File(...)):
     try:
+        # create labels
         label_names = digits + ascii_uppercase
         labels = {idx: label for idx, label in enumerate(label_names)}
 
+        # load model
         model = keras.models.load_model("model/simple_ocr.keras")
 
+        # get image
         contents = await file.read()
         np_img = np.frombuffer(contents, np.uint8)
         image_to_test = cv2.imdecode(np_img, cv2.IMREAD_COLOR)
 
+        # get contours
         gray = cv2.cvtColor(image_to_test, cv2.COLOR_BGR2GRAY)
         blur = cv2.GaussianBlur(gray, (5, 5), 0)
         edge = cv2.Canny(blur, 30, 150)
@@ -54,9 +55,8 @@ async def predict(file: UploadFile = File(...)):
             edge.copy(), cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE
         )
         cntrs = imutils.grab_contours(cntrs)
-
         bbox = [cv2.boundingRect(contour) for contour in cntrs]
-        # Sort contours from left to right, then top to bottom
+        # sort contours from left to right, then top to bottom
         cntrs = [
             c
             for c, _ in sorted(
@@ -65,48 +65,48 @@ async def predict(file: UploadFile = File(...)):
         ]
 
         char_detected = []
-        # Iterate over contours
+        # iterate over contours
         for c in cntrs:
             (x, y, w, h) = cv2.boundingRect(c)
 
-            # Ignore small contours based on width and height
+            # ignore small contours based on width and height
             if 10 <= w <= 350 and 15 <= h <= 350:
-                # Extract Region of Interest (ROI)
+                # extract Region of Interest (ROI)
                 roi = gray[y : y + h, x : x + w]
 
-                # Apply binary thresholding to get a binary image
+                # apply binary thresholding to get a binary image
                 bin_img = cv2.threshold(
                     roi, 0, 255, cv2.THRESH_BINARY | cv2.THRESH_OTSU
                 )[1]
                 (iH, iW) = bin_img.shape
 
-                # Resize to maintain aspect ratio based on the larger dimension (scale factor)
+                # resize to maintain aspect ratio based on the larger dimension (scale factor)
                 scale_factor = 28.0 / max(iW, iH)
                 new_size = (int(iW * scale_factor), int(iH * scale_factor))
                 bin_img = cv2.resize(bin_img, new_size)
 
-                # Calculate padding to fit the image into 28x28 size
+                # calculate padding to fit the image into 28x28 size
                 dX = (28 - new_size[0]) // 2
                 dY = (28 - new_size[1]) // 2
 
-                # Pad the image with black (0) and ensure size is 28x28
+                # pad the image with black (0) and ensure size is 28x28
                 padded = cv2.copyMakeBorder(
                     bin_img, dY, dY, dX, dX, cv2.BORDER_CONSTANT, value=0
                 )
                 padded = cv2.resize(
                     padded, (28, 28)
-                )  # Ensure it's exactly 28x28 if padding is uneven
+                )  # ensure it's exactly 28x28 if padding is uneven
 
-                # Normalize the image to [0, 1] and reshape to match model input (28, 28, 1)
+                # normalize the image to [0, 1] and reshape to match model input (28, 28, 1)
                 padded = np.expand_dims(padded.astype("float32") / 255.0, axis=-1)
 
-                # Append the detected character and its bounding box to the list
+                # append the detected character and its bounding box to the list
                 char_detected.append([padded, (x, y, w, h)])
 
-        # Extract bounding boxes and detected characters
+        # extract bounding boxes and detected characters
         char_images = np.array([c[0] for c in char_detected], dtype="float32")
 
-        # Predict characters using the model
+        # predict characters using the model
         predictions = model.predict(char_images)
 
         response = [
@@ -114,10 +114,7 @@ async def predict(file: UploadFile = File(...)):
             for pred in predictions
         ]
 
-        return JSONResponse(
-            content=response,
-            status_code=200
-        )
+        return JSONResponse(content=response, status_code=200)
 
     except Exception as e:
         return JSONResponse(content={"error": str(e)}, status_code=500)
