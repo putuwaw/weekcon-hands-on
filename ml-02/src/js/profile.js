@@ -30,8 +30,8 @@ const profiles = [{
     'name': 'Allycia Joan Micheline',
     'university': 'Universitas Pradita',
     'image': 'https://lh3.googleusercontent.com/d/1X9dp23dyK8-7Gx7UeMx_HmB410yug5iD',
-    'linkedin': 'www.linkedin.com/in/allycia-joan-micheline',
-    'instagram': 'www.instagram.com/ajm_cia'
+    'linkedin': 'https://www.linkedin.com/in/allycia-joan-micheline',
+    'instagram': 'https://www.instagram.com/ajm_cia'
 },
 {
     'name': 'Indah Wahyuni',
@@ -44,7 +44,7 @@ const profiles = [{
     'name': 'Azhar Anas',
     'university': 'Universitas Mercu Buana',
     'image': 'https://lh3.googleusercontent.com/d/1B8EAyjahEm8xzNh56YwCR2Sablxd1QAb',
-    'linkedin': 'www.linkedin.com/in/azhar-anas',
+    'linkedin': 'https://www.linkedin.com/in/azhar-anas',
     'instagram': 'https://www.instagram.com/dyo_sch/'
 },
 {
