@@ -13,7 +13,7 @@ const profiles = [{
     'instagram': 'https://www.instagram.com/al_sahik'
 },
 {
-    'name': 'M. Jabir Habibie Batubara',
+    'name': 'Muhammad Jabir Habibie Batubara',
     'university': 'Universitas Muhammadiyah Kalimantan Timur',
     'image': 'https://lh3.googleusercontent.com/d/1iXmi6b54B7DmEgG8ZRVrloDJshOEqknA',
     'linkedin': 'https://www.linkedin.com/in/muhammadjabirhabibie',
@@ -53,6 +53,48 @@ const profiles = [{
     'image': 'https://lh3.googleusercontent.com/d/1-pOwhrr5QPEZiQXKstbG7ZV04X_wCY1K',
     'linkedin': 'https://www.linkedin.com/in/mukhammad-iskhaq-khakim-3797ab246',
     'instagram': 'https://www.instagram.com/saka_ishaq/'
+},
+{
+    "name": "Raden Mohamad Adrian Ramadhan Hendar Wibawa",
+    "university": "Universitas Indonesia",
+    'image': 'https://lh3.googleusercontent.com/d/1ALVal4ml8z36qS0HFcn7GHQgfEE5unje',
+    "linkedin": "https://www.linkedin.com/in/adrian-voiz/",
+    "instagram": "https://www.instagram.com/adrian_voiz/"
+},
+{
+    "name": "Reyhanssan Islamey",
+    "university": "Universitas Ahmad Dahlan",
+    'image': 'https://lh3.googleusercontent.com/d/1-2oI1QVz4IX9qAPa_XNwhg7WXQJky1h5',
+    "linkedin": "https://www.linkedin.com/in/reyhanssan-islamey/",
+    "instagram": "https://www.instagram.com/erzetarey_/"
+},
+{
+    "name": "Ahmad Ardiansyah",
+    "university": "IPB University",
+    'image': 'https://lh3.googleusercontent.com/d/1LiVjJAsmtmATIgJT7Vnn34xctZwIzwpj',
+    "linkedin": "https://www.linkedin.com/in/ahmad-ardiansyah-a521441a4/",
+    "instagram": "https://www.instagram.com/ardiansyahmadz/"
+},
+{
+    "name": "Fadhil Yusuf",
+    "university": "Universitas Sebelas Maret",
+    'image': 'https://lh3.googleusercontent.com/d/1_9CKDYBOqGoBHzLzZu910kievGhAIUIK',
+    "linkedin": "https://www.linkedin.com/in/fadhil-yusuf/",
+    "instagram": "https://www.instagram.com/fadilmusawa/"
+},
+{
+    "name": "Fina Shafirna Mustaqiem",
+    "university": "IPB University",
+    'image': 'https://lh3.googleusercontent.com/d/1k8XlyNYkSxchw1o7YVJF6v5soVFTYG4c',
+    "linkedin": "https://www.linkedin.com/in/fina-shafirna-mustaqiem-4051b7215/",
+    "instagram": "https://www.instagram.com/fkh.073"
+},
+{
+    "name": "Dian Maharani",
+    "university": "Universitas Pembangunan Nasional Veteran Jawa Timur",
+    'image': 'https://lh3.googleusercontent.com/d/1_R3xYWwBENXyYd8YQI0BvH9sY2HafffL',
+    "linkedin": "https://www.linkedin.com/in/dian-maharani-97399a2b8",
+    "instagram": "https://www.instagram.com/xdianary/"
 }]
 
 
@@ -73,7 +115,7 @@ function createProfileCards(profiles) {
                     src="${profile.image}"
                     alt="${profile.name} image"
                 />
-                <h5 class="mb-1 text-xl font-medium text-center text-gray-900">${profile.name}</h5>
+                <h5 class="mb-1 text-xl font-medium text-center text-gray-900 md:px-2">${profile.name}</h5>
                 <span class="text-sm px-2 text-gray-500 text-center">${profile.university}</span>
                 <div class="flex flex-wrap justify-center mt-4 md:mt-6 gap-2">
                     <a href="${profile.linkedin}" target="_blank"
